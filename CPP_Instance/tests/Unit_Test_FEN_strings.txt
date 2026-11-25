@@ -1,0 +1,30 @@
+Castling
+r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1							Castling available in clean FEN
+r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1							Castling available in clean FEN
+r3k2r/8/8/8/8/8/8/R2QK2R w KQkq - 0 1							Castling blocked path is illegal
+r3k2r/8/8/8/8/8/3q4/R3K2R w KQkq - 0 1							Castling illegal if king passes through attack
+r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1							Castling illegal after rook move
+r3k2r/8/8/8/3q4/8/8/R3K2R w KQkq - 0 1							Castling forbidden when king is in check
+r3k2r/8/8/8/8/8/3q4/R3K2R w KQkq - 0 1							Castling forbidden when intermediate square is attacked
+r3k2r/8/8/8/5q2/8/8/R3K2R w KQkq - 0 1							Castling forbidden when destination square is attacked
+r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1							Castling rights removed after rook move and restore on undo
+r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1							Castling undo restores original board
+
+En Passant
+rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b - e3 0 1		En Passant square created after double pawn push
+rnbqkbnr/1ppppppp/p7/8/4P3/8/PPPP1PPP/RNBQKBNR w - - 0 2		En Passant only legal immediately
+8/8/8/3pP3/8/8/8/8 w - d6 0 1									En Passant legal when correct position is set by FEN
+4k3/8/4r3/3pP3/8/8/8/4K3 w - d6 0 1								En Passant illegal if pawn is pinned
+8/8/8/3pP3/8/8/8/8 w - d6 0 1									EP capture undo restores position exactly
+4k3/8/4r3/3pP3/8/8/8/4K3 w - d6 0 1								EP illegal when capturing pawn exposes own king through discovery pin
+4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1								EP legal when the capture does NOT expose king
+rnbqkbnr/1ppppppp/p7/8/4P3/8/PPPP1PPP/RNBQKBNR w - - 0 2		EP only legal immediately before any other move
+8/8/8/3pP3/8/8/8/8 w - d6 0 1									EP square set by FEN yields correct EP move
+8/8/8/3pP3/8/8/8/8 w - d6 0 1									EP undo restores board perfectly
+
+Test FEN
+rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1		FEN loads starting position
+
+Test Undo
+rnbqkbnr/pppp1ppp/8/4p3/3Pp3/8/PPP1PPPP/RNBQKBNR w KQkq e6 0 3	Undo handles en-passant correctly
+r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1							Undo handles castling
