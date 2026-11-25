@@ -1,0 +1,226 @@
+DEPENDENCY MAP
+(from lowest‑level → highest‑level)
+1. Core Data Structures (lowest level)
+	move.h
+	Defines the Move struct used everywhere.
+	No dependencies.
+
+	board.h
+	Defines:
+	Piece, PieceType, Color
+	Board state, king positions, castling rights, EP square
+	applyMove / undoMove
+	attack detection
+	Depends on:
+		move.h (for Move struct)
+
+2. Core Logic
+	move_generator.h
+	Generates pseudolegal + legal moves.
+	Depends on:
+		board.h
+		move.h
+
+	FEN.h
+	Load and export FEN strings.
+	Depends on:
+		board.h
+		Piece and color enums
+
+	notation.h
+	SAN and algebraic notation, conversion to/from Move.
+	Depends on:
+		board.h
+		move.h
+
+	game.h
+	High-level game controller:
+	fetch legal moves
+	apply moves
+	detect game over
+	Depends on:
+		board.h
+		move.h
+
+3. UI Abstraction
+	ui_interface.h
+	Abstract UI class.
+	Depends on:
+		board.h
+
+	cli_ui.h
+	Concrete CLI implementation.
+	Depends on:
+		ui_interface.h
+		board.h
+
+4. Implementation Files (matching the headers)
+	board.cpp
+	Implements board.h.
+	Depends on:
+		board.h
+		move.h
+		move_state (embedded)
+
+	move.cpp
+	Minimal, just includes move.h.
+	Depends on:
+		move.h
+
+	move_generator.cpp
+	Implements move_generator.h.
+	Depends on:
+		move_generator.h
+		board.h
+		move.h
+
+	notation.cpp
+	Implements SAN parsing + generation.
+	Depends on:
+		notation.h
+		move_generator.h
+		board.h
+		move.h
+
+	game.cpp
+	Implements game.h.
+	Depends on:
+		game.h
+		move_generator.h
+		board.h
+
+	FEN.cpp
+	Implements FEN.h.
+	Depends on:
+		FEN.h
+		board.h
+
+	cli_ui.cpp
+	Implements terminal UI.
+	Depends on:
+	cli_ui.h
+	board.h
+
+5. Tools / Applications
+	main.cpp (Game executable)
+	Console game loop.
+	Depends on:
+		game.h
+		notation.h
+		move_generator.h
+		cli_ui.h
+		board.h
+
+	perft.cpp
+	Standalone perft driver.
+	Depends on:
+		board.h
+		move.h
+		move_generator.h
+		FEN.h
+		notation.h
+
+6. Tests
+	All tests rely on:
+		Catch2
+		board.h
+		move.h
+		move_generator.h
+		FEN.h
+		notation.h
+		game.h (sometimes)
+
+Examples:
+	test_board.cpp 		→ basic board state
+	test_fen.cpp 		→ FEN loading
+	test_movegen.cpp 	→ starting movegen
+	test_castling.cpp 	→ legality rules
+	test_enpassant.cpp 	→ EP + pin logic
+	test_undo.cpp 		→ full reversibility
+
+LAYERED VIEW (stack)
+	Layer 0 – Primitive
+		move.h
+
+	Layer 1 – State Machine
+		board.h
+		board.cpp
+
+	Layer 2 – Rules Engine
+		move_generator
+		FEN
+		notation
+
+	Layer 3 – UI Abstraction
+		ui_interface
+		cli_ui
+
+	Layer 4 – Applications
+		main.cpp (game)
+		perft.cpp (validation tool)
+
+	Layer 5 – Test Harness
+		All test_*.cpp files
+
+### Dependency Diagram
+                             +------------------+
+                             |     move.h       |
+                             |  (Move struct)   |
+                             +---------+--------+
+                                       |
+                                       v
+                        +---------------------------+
+                        |         board.h           |
+                        |   (Pieces, board state,   |
+                        |    apply/undo, attacks)   |
+                        +--------------+------------+
+									   |
+          ----------------------------------------------------------------
+          |                    |                 |                       |
+          v                    v                 v                       v
++--------------------+  +-------------+  +----------------+     +-----------------+
+|  move_generator.h  |  |    FEN.h    |  |  notation.h    |     |     game.h      |
+|    (move rules)    |  |  (FEN I/O)  |  | (SAN, coords)  |     | (game control)  |
++---------+----------+  +------+------+  +-------+--------+     +--------+--------+
+          |                    |                 |                       |
+          |                    |                 |                       |
+          v                    v                 v                       v
++--------------------+   +-----------+   +----------------+     +-----------------+
+| move_generator.cpp |   |  FEN.cpp  |   | notation.cpp   |     |     game.cpp    |
++--------------------+   +-----------+   +----------------+     +-----------------+
+
+							 UI ABSTRACTION LAYER
+						     --------------------
+                             +------------------+
+                             | ui_interface.h   |
+                             | (abstract UI)    |
+                             +---------+--------+
+                                       |
+                                       v
+                             +------------------+
+                             |    cli_ui.h      |
+                             | CLI UI (header)  |
+                             +---------+--------+
+                                       |
+                                       v
+                             +------------------+
+                             |   cli_ui.cpp     |
+                             | CLI UI impl      |
+                             +------------------+
+
+                         APPLICATION LAYER (TOP LEVEL)
+                         -----------------------------
+                             +------------------+
+                             |     main.cpp     |
+                             |  (game CLI)      |
+                             +--------+---------+
+                                      |
+                                      v
+                             +------------------+
+                             |    perft.cpp     |
+                             | (perft driver)   |
+                             +------------------+
+
+                      TESTS (depend on engine + Catch2)
+                      ---------------------------------
+     test_*.cpp  --->  board.h, move.h, move_generator.h, notation.h, FEN.h, game.h

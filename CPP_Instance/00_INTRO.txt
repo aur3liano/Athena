@@ -1,0 +1,102 @@
+Hello Copilot. I am working on a coding project written in C++ with a CMake build architecture.
+
+The goal of the project is to create a fully self contained executable which simulates a Chess game.
+
+I have 01_README.md and 02_roadmap.md files to inform you on the current status and direction of the project.
+
+I have finished creating the engine and a Qt GUI.
+
+I am ready to move on to start creating expert players (virtual agents).
+
+I want to develop virtual players in a slightly different way than the roadmap proposes.
+
+Here is how I want to develop different versions of the expert player:
+
+Agent_01 - Random moves, no evaluation, no search
+Agent_02 -
+	2a. static evaluation -
+		2aa. simple piece material count
+	2b. search - at arbitrary depth
+		2ba. classic minimax
+Agent 03 -
+	3a. static evaluation -
+		3aa. simple piece material count
+		3ab. king endgame pressure strategy
+	3b. search - at arbitrary depth
+		3ba. minimax with alpha beta pruning (MMwABP)
+Agent 04 -
+	4a. static evaluation -
+		4aa. simple piece material count
+		4ab. piece-square tables
+		4ac. king endgame pressure strategy
+	4b. search - at arbitrary depth
+		4ba. MMwABP
+		4bb. move ordering
+Agent 05 -
+	5a. static evaluation -
+		5aa. piece material count
+		5ab. piece-square tables
+		5ac. king safety
+		5ad. king endgame pressure strategy
+	5b. search - at arbitrary depth
+		5ba. MMwABP
+		5bb. move ordering
+		5bc. iterative deepening
+Agent 06 -
+	6a. static evaluation -
+		6aa. piece material count
+		6ab. piece-square tables
+		6ac. piece mobility
+		6ad. king safety
+		6ae. king endgame pressure strategy
+	6b. search - at arbitrary depth
+		6ba. MMwABP
+		6bb. move ordering
+		6bc. iterative deepening
+Agent 07 -
+	7a. static evaluation -
+		7aa. piece material count
+		7ab. piece-square tables
+		7ac. piece mobility
+		7ad. king safety
+		7ae. king endgame pressure strategy
+	7b. search - at arbitrary depth
+		7ba. move ordering
+		7bb. Monte Carlo Tree Search (MCTS)
+Agent 08 -
+	8a. static evaluation -
+		8aa. piece material count
+		8ab. piece-square tables
+		8ac. piece mobility
+		8ad. king safety
+		8ae. king endgame pressure strategy
+	8b. hybrid search - at arbitrary depth for both 
+		8ba. MMwABP
+		8bb. move ordering
+		8bc. MCTS
+Agent 09 -
+	9a. static evaluation -
+		9aa. piece material count
+		9ab. piece-square tables
+		9ac. piece mobility
+		9ad. king safety
+		9ae. king endgame pressure strategy
+	9b. hybrid search - at arbitrary depth for both 
+		9ba. MMwABP
+		9bb. MCTS
+		9bc. move ordering
+		9bd. iterative deepening
+
+Additionally, I want each engine to be able to connect to an opening book and syzygy endgame tablebase.
+
+But the opening book and the endgame tablebase connections will come later.
+
+I don't want these agents to overwrite each other. I want them to be separate sets of (.h and .cpp) files.
+
+As of right now, agents 1-6 have been created and successfully integrated into CLI and GUI.
+
+We have also created "agent tournament" systems to test agent strength against each other.
+
+For this session, 
+
+Please let me know if you have questions or if you need clarification. Thank you.
